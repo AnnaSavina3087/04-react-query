@@ -13,6 +13,7 @@ import ErrorMessage from "../ErrorMessage/ErrorMessage";
 import Loader from "../Loader/Loader";
 
 import { Toaster, toast } from "react-hot-toast";
+import ReactPaginate from "react-paginate";
 
 const App: React.FC = () => {
   const [page, setPage] = useState(1);
@@ -29,7 +30,7 @@ const App: React.FC = () => {
     placeholderData: (prev) => prev,
   });
 
-  const movies = data?.results ?? [];
+  const movies: Movie[] = data?.results ?? [];
   const totalPages = data?.total_pages ?? 1;
 
   useEffect(() => {
@@ -74,27 +75,19 @@ const App: React.FC = () => {
                     onSelect={(m) => setSelectedMovie(m)}
                   />
 
-                  {/* ✅ ПРОСТА ПАГІНАЦІЯ (без бібліотеки) */}
                   {totalPages > 1 && (
-                    <div className={styles.pagination}>
-                      <button
-                        onClick={() => setPage(page - 1)}
-                        disabled={page === 1}
-                      >
-                        ←
-                      </button>
-
-                      <span>
-                        {page} / {totalPages}
-                      </span>
-
-                      <button
-                        onClick={() => setPage(page + 1)}
-                        disabled={page === totalPages}
-                      >
-                        →
-                      </button>
-                    </div>
+                    <ReactPaginate
+                      pageCount={totalPages}
+                      pageRangeDisplayed={5}
+                      marginPagesDisplayed={1}
+                      onPageChange={({ selected }) => setPage(selected + 1)}
+                      forcePage={page - 1}
+                      containerClassName={styles.pagination}
+                      activeClassName={styles.active}
+                      disabledClassName={styles.disabled}
+                      nextLabel="→"
+                      previousLabel="←"
+                    />
                   )}
                 </>
               )}

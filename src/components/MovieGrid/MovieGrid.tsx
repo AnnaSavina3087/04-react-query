@@ -4,18 +4,14 @@ import type { Movie } from "../../types/movie";
 
 export interface MovieGridProps {
   movies: Movie[];
-  onSelect?: (movie: Movie) => void;
+  onSelect: (movie: Movie) => void;
 }
 
 const MovieGrid: React.FC<MovieGridProps> = ({ movies, onSelect }) => {
   return (
     <div className={styles.grid}>
       {movies.map((m) => (
-        <div
-          key={m.id}
-          className={styles.item}
-          onClick={() => onSelect && onSelect(m)}
-        >
+        <div key={m.id} className={styles.item} onClick={() => onSelect(m)}>
           {m.poster_path ? (
             <img
               src={`https://image.tmdb.org/t/p/w300${m.poster_path}`}
