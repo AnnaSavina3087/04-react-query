@@ -14,7 +14,7 @@ export const searchMovies = async (
   query: string,
   page: number,
 ): Promise<MoviesResponse> => {
-  const response = await axios.get(`${BASE_URL}/search/movie`, {
+  const response = await axios.get<MoviesResponse>(`${BASE_URL}/search/movie`, {
     params: {
       query,
       page,
